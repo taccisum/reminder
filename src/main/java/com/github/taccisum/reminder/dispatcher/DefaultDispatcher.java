@@ -41,14 +41,13 @@ public class DefaultDispatcher implements Dispatcher {
     public int dispatch(String remindCode, Subject subject, ChannelDescriptor channelDescriptor, Object... args) {
         TargetSelector targetSelector = TargetSelectorFactory.create(remindCode);
         MessageBuilder messageBuilder = MessageBuilderFactory.create(remindCode);
-        MessageTemplate template = getMessageTemplate(remindCode);
         int failCount = 0;
 
         List<Target> targets = targetSelector.select(args);
         for (Target target : targets) {
             try {
                 // try块执行，防止单条信息发送失败导致所有提醒失败
-                Message message = messageBuilder.build(target, template, subject, args);
+                Message message = messageBuilder.build(target, subject, args);
                 sender.send(target, message, channelDescriptor, args);
             } catch (BuildMessageException e) {
                 throw new NotImplementedException();
