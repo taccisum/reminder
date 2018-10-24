@@ -5,5 +5,5 @@ package com.github.taccisum.reminder.api;
  * @since 24/10/2018
  */
 public interface MessageBuilder {
-    Message build(Target target, MessageTemplate template, Subject subject, Object... args);
+    Message build(Target target, Subject subject, Object... args);
 }
