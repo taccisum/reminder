@@ -6,5 +6,8 @@ package com.github.taccisum.reminder.api;
  */
 public interface Channel {
     String code();
+
     String name();
+
+    void receive(Target target, Message message, Object[] args);
 }
