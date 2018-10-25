@@ -2,11 +2,13 @@ package com.github.taccisum.reminder.dispatcher;
 
 import com.github.taccisum.reminder.api.*;
 import com.github.taccisum.reminder.builder.MessageBuilderFactory;
-import com.github.taccisum.reminder.exception.SendMessageException;
 import com.github.taccisum.reminder.exception.BuildMessageException;
+import com.github.taccisum.reminder.exception.ExceedMaxFailureSendTimesException;
+import com.github.taccisum.reminder.exception.SendMessageException;
 import com.github.taccisum.reminder.selector.TargetSelectorFactory;
 import com.github.taccisum.reminder.sender.DefaultSender;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class DefaultDispatcher implements Dispatcher {
     public static final int MAX_FAIL_COUNT = 1000;
     private Sender sender;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public DefaultDispatcher() {
         this.sender = new DefaultSender();
@@ -39,16 +42,19 @@ public class DefaultDispatcher implements Dispatcher {
                 Message message = messageBuilder.build(target, subject, args);
                 sender.send(target, message, channelDescriptor, args);
             } catch (BuildMessageException e) {
-                throw new NotImplementedException();
+                logger.error("build message - [{}] failure. target: {}", remindCode, target);
+                failCount++;
             } catch (SendMessageException e) {
-                throw new NotImplementedException();
+                logger.error("send message - [{}] failure. target: {}", remindCode, target);
+                failCount++;
             } catch (Exception e) {
+                logger.error("error happen on send message - [" + remindCode + "]. target: " + target, e);
+                failCount++;
+            } finally {
                 if (failCount > MAX_FAIL_COUNT) {
                     // 限制最大失败次数，防止一直失败大量消耗系统资源
-                    // TODO::
-                    throw new RuntimeException();
+                    throw new ExceedMaxFailureSendTimesException(MAX_FAIL_COUNT);
                 }
-                failCount++;
             }
         }
         return targets.size() - failCount;
