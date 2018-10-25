@@ -12,8 +12,8 @@ import java.util.Map;
 public abstract class ChannelFactory {
     private static Map<String, Channel> channels = new HashMap<>();
 
-    public static void put(String code, Channel channel) {
-        channels.put(code, channel);
+    public static void put(Channel channel) {
+        channels.put(channel.code(), channel);
     }
 
     public static Channel create(String code) {

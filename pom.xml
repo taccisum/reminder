@@ -14,6 +14,26 @@
         <module>reminder-spring-boot-starter</module>
     </modules>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.taccisum</groupId>
+                <artifactId>reminder-core</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.taccisum</groupId>
+                <artifactId>reminder-spring</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.taccisum</groupId>
+                <artifactId>reminder-spring-boot-starter</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <plugins>
             <plugin>

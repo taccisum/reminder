@@ -11,9 +11,16 @@ import java.util.List;
  */
 public class FixedTargetSelector implements TargetSelector {
     private List<Target> targets;
+    private String code;
 
-    public FixedTargetSelector(List<Target> targets) {
+    public FixedTargetSelector(String code, List<Target> targets) {
         this.targets = targets;
+        this.code = code;
+    }
+
+    @Override
+    public String code() {
+        return code;
     }
 
     @Override

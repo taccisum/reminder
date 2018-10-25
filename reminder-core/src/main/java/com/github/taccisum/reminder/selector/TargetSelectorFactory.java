@@ -12,8 +12,8 @@ import java.util.Map;
 public abstract class TargetSelectorFactory {
     private static Map<String, TargetSelector> selectors = new HashMap<>();
 
-    public static void put(String remindCode, TargetSelector selector) {
-        selectors.put(remindCode, selector);
+    public static void put(TargetSelector selector) {
+        selectors.put(selector.code(), selector);
     }
 
     public static TargetSelector create(String remindCode) {

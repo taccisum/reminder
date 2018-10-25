@@ -12,8 +12,8 @@ import java.util.Map;
 public abstract class MessageBuilderFactory {
     private static Map<String, MessageBuilder> builders = new HashMap<>();
 
-    public static void put(String remindCode, MessageBuilder builder) {
-        builders.put(remindCode, builder);
+    public static void put(MessageBuilder builder) {
+        builders.put(builder.code(), builder);
     }
 
     public static MessageBuilder create(String remindCode) {

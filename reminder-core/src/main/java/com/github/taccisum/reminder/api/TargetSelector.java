@@ -6,6 +6,6 @@ import java.util.List;
  * @author tac
  * @since 24/10/2018
  */
-public interface TargetSelector {
+public interface TargetSelector extends Unique {
     List<Target> select(Object... args);
 }

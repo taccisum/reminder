@@ -11,5 +11,17 @@
 
     <artifactId>reminder-spring</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.taccisum</groupId>
+            <artifactId>reminder-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.20.RELEASE</version>
+        </dependency>
+    </dependencies>
 
 </project>

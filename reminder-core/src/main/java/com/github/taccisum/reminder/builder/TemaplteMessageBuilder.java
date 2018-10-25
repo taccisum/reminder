@@ -9,15 +9,13 @@ import com.github.taccisum.reminder.api.Metadata;
  * @since 24/10/2018
  */
 public abstract class TemaplteMessageBuilder implements MessageBuilder {
-    protected String remindCode;
     protected Metadata metadata;
 
-    public TemaplteMessageBuilder(String remindCode, Metadata metadata) {
-        this.remindCode = remindCode;
+    public TemaplteMessageBuilder(Metadata metadata) {
         this.metadata = metadata;
     }
 
     protected MessageTemplate getTemplate() {
-        return metadata.templates().get(remindCode);
+        return metadata.templates().get(code());
     }
 }
