@@ -1,8 +1,8 @@
 package com.github.taccisum.reminder;
 
+import com.github.taccisum.reminder.channel.descriptor.StringChannelDescriptor;
 import com.github.taccisum.reminder.api.ChannelDescriptor;
 import com.github.taccisum.reminder.api.Subject;
-import com.github.taccisum.reminder.channel.descriptor.StringChannelDescriptor;
 
 /**
  * @author tac

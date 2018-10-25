@@ -2,8 +2,8 @@ package com.github.taccisum.reminder.dispatcher;
 
 import com.github.taccisum.reminder.api.*;
 import com.github.taccisum.reminder.builder.MessageBuilderFactory;
-import com.github.taccisum.reminder.exception.BuildMessageException;
 import com.github.taccisum.reminder.exception.SendMessageException;
+import com.github.taccisum.reminder.exception.BuildMessageException;
 import com.github.taccisum.reminder.selector.TargetSelectorFactory;
 import com.github.taccisum.reminder.sender.DefaultSender;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
