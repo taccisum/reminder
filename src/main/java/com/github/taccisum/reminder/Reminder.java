@@ -3,6 +3,7 @@ package com.github.taccisum.reminder;
 import com.github.taccisum.reminder.api.ChannelDescriptor;
 import com.github.taccisum.reminder.api.Dispatcher;
 import com.github.taccisum.reminder.api.Subject;
+import com.github.taccisum.reminder.dispatcher.DefaultDispatcher;
 
 /**
  * @author tac
@@ -11,7 +12,11 @@ import com.github.taccisum.reminder.api.Subject;
 public class Reminder extends AbstractReminder {
     private Dispatcher dispatcher;
 
-    public Reminder(Dispatcher dispatcher) {
+    public Reminder() {
+        dispatcher = new DefaultDispatcher();
+    }
+
+    public void setDispatcher(Dispatcher dispatcher) {
         this.dispatcher = dispatcher;
     }
 

@@ -4,7 +4,6 @@ import com.github.taccisum.reminder.api.*;
 import com.github.taccisum.reminder.builder.MessageBuilderFactory;
 import com.github.taccisum.reminder.exception.BuildMessageException;
 import com.github.taccisum.reminder.exception.SendMessageException;
-import com.github.taccisum.reminder.metadata.IniMetadata;
 import com.github.taccisum.reminder.selector.TargetSelectorFactory;
 import com.github.taccisum.reminder.sender.DefaultSender;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -18,23 +17,13 @@ import java.util.List;
 public class DefaultDispatcher implements Dispatcher {
     public static final int MAX_FAIL_COUNT = 1000;
     private Sender sender;
-    private Metadata metadata;
 
     public DefaultDispatcher() {
-        this("classpath:message-templates.ini");
-    }
-
-    public DefaultDispatcher(String path) {
         this.sender = new DefaultSender();
-        this.metadata = new IniMetadata(path);
     }
 
     public void setSender(Sender sender) {
         this.sender = sender;
-    }
-
-    public void setMetadata(Metadata metadata) {
-        this.metadata = metadata;
     }
 
     @Override
@@ -63,14 +52,5 @@ public class DefaultDispatcher implements Dispatcher {
             }
         }
         return targets.size() - failCount;
-    }
-
-    private MessageTemplate getMessageTemplate(String remindCode) {
-        MessageTemplate t = metadata.templates().get(remindCode);
-        if (t == null) {
-            // TODO::
-            throw new RuntimeException();
-        }
-        return t;
     }
 }
