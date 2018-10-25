@@ -21,7 +21,7 @@ public class DefaultSender implements Sender {
 
         for (Channel channel : channels) {
             try {
-                fallbackIfReceiveFailure(channel, target, message, sentChannels, args);
+                fallbackIfSendFailure(channel, target, message, sentChannels, args);
             } catch (ChannelReceiveException e) {
                 // 说明channel及其fallback channel均处理失败了
                 successChannelCount--;
@@ -33,18 +33,18 @@ public class DefaultSender implements Sender {
         }
     }
 
-    void fallbackIfReceiveFailure(Channel channel, Target target, Message message, Set<String> sentChannels, Object[] args) {
+    void fallbackIfSendFailure(Channel channel, Target target, Message message, Set<String> sentChannels, Object[] args) {
         try {
             if (sentChannels.contains(channel.code())) {
                 return;
             }
-            channel.receive(target, message, args);
+            channel.send(target, message, args);
             sentChannels.add(channel.code());
         } catch (ChannelReceiveException e) {
             if (channel instanceof FallbackCapableChannel) {
                 Channel fallback = ((FallbackCapableChannel) channel).getFallback();
                 if (fallback != null) {
-                    fallbackIfReceiveFailure(fallback, target, message, sentChannels, args);
+                    fallbackIfSendFailure(fallback, target, message, sentChannels, args);
                     return;
                 }
             }

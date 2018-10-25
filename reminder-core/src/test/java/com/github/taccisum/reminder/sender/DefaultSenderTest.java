@@ -34,8 +34,8 @@ public class DefaultSenderTest {
         channels.add(null);
         channels.add(successChannel);
         when(descriptor.toChannels()).thenReturn(channels);
-        doThrow(ChannelReceiveException.class).when(sender).fallbackIfReceiveFailure((Channel) isNull(), any(), any(), any(), any());
-        doNothing().when(sender).fallbackIfReceiveFailure(eq(successChannel), any(), any(), any(), any());
+        doThrow(ChannelReceiveException.class).when(sender).fallbackIfSendFailure((Channel) isNull(), any(), any(), any(), any());
+        doNothing().when(sender).fallbackIfSendFailure(eq(successChannel), any(), any(), any(), any());
         sender.send(mock(Target.class), mock(Message.class), descriptor);
     }
 
@@ -46,74 +46,74 @@ public class DefaultSenderTest {
         channels.add(null);
         channels.add(null);
         when(descriptor.toChannels()).thenReturn(channels);
-        doThrow(ChannelReceiveException.class).when(sender).fallbackIfReceiveFailure(any(), any(), any(), any(), any());
+        doThrow(ChannelReceiveException.class).when(sender).fallbackIfSendFailure(any(), any(), any(), any(), any());
         sender.send(mock(Target.class), mock(Message.class), descriptor);
     }
 
     @Test
-    public void fallbackIfReceiveFailureWhenChannelSuccess() throws Exception {
+    public void fallbackIfSendFailureWhenChannelSuccess() throws Exception {
         Channel channelB = mock(Channel.class);
         FallbackCapableChannel channelA = mock(FallbackCapableChannel.class);
         when(channelA.code()).thenReturn("A");
         when(channelB.code()).thenReturn("B");
         when(channelA.getFallback()).thenReturn(channelB);
-        doNothing().when(channelA).receive(any(), any(), any());
+        doNothing().when(channelA).send(any(), any(), any());
         HashSet<String> sentChannels = new HashSet<>();
-        sender.fallbackIfReceiveFailure(channelA, null, null, sentChannels, null);
+        sender.fallbackIfSendFailure(channelA, null, null, sentChannels, null);
 
         assertThat(sentChannels).contains("A");
         assertThat(sentChannels).doesNotContain("B");
-        verify(channelA, times(1)).receive(any(), any(), any());
-        verify(channelB, times(0)).receive(any(), any(), any());
+        verify(channelA, times(1)).send(any(), any(), any());
+        verify(channelB, times(0)).send(any(), any(), any());
     }
 
     @Test
-    public void fallbackIfReceiveFailureWhenChannelIsSent() throws Exception {
+    public void fallbackIfSendFailureWhenChannelIsSent() throws Exception {
         Channel channelB = mock(Channel.class);
         FallbackCapableChannel channelA = mock(FallbackCapableChannel.class);
         when(channelA.code()).thenReturn("A");
         when(channelB.code()).thenReturn("B");
         when(channelA.getFallback()).thenReturn(channelB);
-        doNothing().when(channelA).receive(any(), any(), any());
+        doNothing().when(channelA).send(any(), any(), any());
         HashSet<String> sentChannels = new HashSet<>();
         sentChannels.add(channelA.code());
-        sender.fallbackIfReceiveFailure(channelA, null, null, sentChannels, null);
+        sender.fallbackIfSendFailure(channelA, null, null, sentChannels, null);
 
         assertThat(sentChannels).contains("A");
         assertThat(sentChannels).doesNotContain("B");
-        verify(channelA, times(0)).receive(any(), any(), any());
-        verify(channelB, times(0)).receive(any(), any(), any());
+        verify(channelA, times(0)).send(any(), any(), any());
+        verify(channelB, times(0)).send(any(), any(), any());
     }
 
     @Test
-    public void fallbackIfReceiveFailureWhenChannelFailure() throws Exception {
+    public void fallbackIfSendFailureWhenChannelFailure() throws Exception {
         Channel channelB = mock(Channel.class);
         FallbackCapableChannel channelA = mock(FallbackCapableChannel.class);
         when(channelA.code()).thenReturn("A");
         when(channelB.code()).thenReturn("B");
         when(channelA.getFallback()).thenReturn(channelB);
 
-        doThrow(ChannelReceiveException.class).when(channelA).receive(any(), any(), any());
-        doNothing().when(channelB).receive(any(), any(), any());
+        doThrow(ChannelReceiveException.class).when(channelA).send(any(), any(), any());
+        doNothing().when(channelB).send(any(), any(), any());
         HashSet<String> sentChannels = new HashSet<>();
-        sender.fallbackIfReceiveFailure(channelA, null, null, sentChannels, null);
+        sender.fallbackIfSendFailure(channelA, null, null, sentChannels, null);
 
         assertThat(sentChannels).doesNotContain("A");
         assertThat(sentChannels).contains("B");
-        verify(channelA, times(1)).receive(any(), any(), any());
-        verify(channelB, times(1)).receive(any(), any(), any());
+        verify(channelA, times(1)).send(any(), any(), any());
+        verify(channelB, times(1)).send(any(), any(), any());
     }
 
     @Test(expected = ChannelReceiveException.class)
-    public void fallbackIfReceiveFailureWhenAllChannelFailure() throws Exception {
+    public void fallbackIfSendFailureWhenAllChannelFailure() throws Exception {
         Channel channelB = mock(Channel.class);
         FallbackCapableChannel channelA = mock(FallbackCapableChannel.class);
         when(channelA.code()).thenReturn("A");
         when(channelB.code()).thenReturn("B");
         when(channelA.getFallback()).thenReturn(channelB);
 
-        doThrow(ChannelReceiveException.class).when(channelA).receive(any(), any(), any());
-        doThrow(ChannelReceiveException.class).when(channelB).receive(any(), any(), any());
-        sender.fallbackIfReceiveFailure(channelA, null, null, new HashSet<>(), null);
+        doThrow(ChannelReceiveException.class).when(channelA).send(any(), any(), any());
+        doThrow(ChannelReceiveException.class).when(channelB).send(any(), any(), any());
+        sender.fallbackIfSendFailure(channelA, null, null, new HashSet<>(), null);
     }
 }

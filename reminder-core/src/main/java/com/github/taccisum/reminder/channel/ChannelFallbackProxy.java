@@ -29,8 +29,8 @@ public class ChannelFallbackProxy implements FallbackCapableChannel {
     }
 
     @Override
-    public void receive(Target target, Message message, Object[] args) {
-        delegate.receive(target, message, args);
+    public void send(Target target, Message message, Object[] args) {
+        delegate.send(target, message, args);
     }
 
     @Override

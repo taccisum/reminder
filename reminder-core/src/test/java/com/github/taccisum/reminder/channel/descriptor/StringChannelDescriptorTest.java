@@ -53,7 +53,7 @@ public class StringChannelDescriptorTest {
         }
 
         @Override
-        public void receive(Target target, Message message, Object[] args) {
+        public void send(Target target, Message message, Object[] args) {
 
         }
     }

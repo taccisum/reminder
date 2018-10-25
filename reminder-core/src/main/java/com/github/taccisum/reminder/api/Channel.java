@@ -7,5 +7,5 @@ package com.github.taccisum.reminder.api;
 public interface Channel extends Unique {
     String name();
 
-    void receive(Target target, Message message, Object[] args);
+    void send(Target target, Message message, Object[] args);
 }
