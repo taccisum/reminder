@@ -3,6 +3,7 @@ package com.github.taccisum.reminder.channel.descriptor;
 import com.github.taccisum.reminder.api.Channel;
 import com.github.taccisum.reminder.api.ChannelDescriptor;
 import com.github.taccisum.reminder.channel.ChannelFactory;
+import com.github.taccisum.reminder.channel.ChannelFallbackProxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,29 @@ public class StringChannelDescriptor implements ChannelDescriptor {
             String[] codes = s.split("_");
 
             if (codes.length == 1) {
-                channels.add(ChannelFactory.create(codes[0].trim()));
+                channels.add(findChannel(codes[0].trim()));
             } else if (codes.length > 1) {
-                for (int i = 0; i < codes.length; i++) {
+                List<Channel> ls = new ArrayList<>();
+                for (String code : codes) {
+                    ls.add(findChannel(code));
                 }
+
+                Channel channel = null;
+                for (int i = ls.size() - 1; i >= 0; i--) {
+                    if (i == ls.size() - 1) {
+                        channel = ls.get(i);
+                    } else {
+                        channel = new ChannelFallbackProxy(ls.get(i), channel);
+                    }
+                }
+
+                channels.add(channel);
             }
         }
         return channels;
+    }
+
+    private Channel findChannel(String code) {
+        return ChannelFactory.create(code);
     }
 }
