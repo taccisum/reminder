@@ -36,6 +36,7 @@ public class DefaultSender implements Sender {
     void fallbackIfSendFailure(Channel channel, Target target, Message message, Set<String> sentChannels, Object[] args) {
         try {
             if (sentChannels.contains(channel.code())) {
+                // 避免往同一个channel重新发送数据
                 return;
             }
             channel.send(target, message, args);
