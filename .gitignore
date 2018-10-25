@@ -5,3 +5,4 @@
 *.log
 *.log.zip
 target/
+.DS_Store
