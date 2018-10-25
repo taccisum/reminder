@@ -30,8 +30,10 @@ public class DefaultDispatcher implements Dispatcher {
     }
 
     @Override
-    public int dispatch(String remindCode, Subject subject, ChannelDescriptor channelDescriptor, Object... args) {
-        TargetSelector targetSelector = TargetSelectorFactory.create(remindCode);
+    public int dispatch(String remindCode, Subject subject, ChannelDescriptor channelDescriptor, TargetSelector targetSelector, Object... args) {
+        if (targetSelector == null) {
+            targetSelector = TargetSelectorFactory.create(remindCode);
+        }
         MessageBuilder messageBuilder = MessageBuilderFactory.create(remindCode);
         int failCount = 0;
 
