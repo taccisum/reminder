@@ -14,6 +14,28 @@
         <module>reminder-spring-boot-starter</module>
     </modules>
 
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://mit-license.org/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>taccisum</name>
+            <email>514162920@qq.com</email>
+            <url>https://taccisum.github.io</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/taccisum/reminder</url>
+        <connection>https://github.com/taccisum/reminder.git</connection>
+        <developerConnection>https://github.com/taccisum</developerConnection>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -53,6 +75,28 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!--<distributionManagement>-->
+    <!--<repository>-->
+    <!--<id>ossrh</id>-->
+    <!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>-->
+    <!--</repository>-->
+    <!--<snapshotRepository>-->
+    <!--<id>ossrh</id>-->
+    <!--<url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
+    <!--</snapshotRepository>-->
+    <!--</distributionManagement>-->
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>${releases.repo}</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>${snapshots.repo}</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>
