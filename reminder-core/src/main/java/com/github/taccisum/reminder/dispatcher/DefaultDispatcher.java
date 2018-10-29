@@ -3,6 +3,7 @@ package com.github.taccisum.reminder.dispatcher;
 import com.github.taccisum.reminder.api.*;
 import com.github.taccisum.reminder.builder.MessageBuilderFactory;
 import com.github.taccisum.reminder.exception.BuildMessageException;
+import com.github.taccisum.reminder.exception.DispatcherException;
 import com.github.taccisum.reminder.exception.ExceedMaxFailureSendTimesException;
 import com.github.taccisum.reminder.exception.SendMessageException;
 import com.github.taccisum.reminder.selector.TargetSelectorFactory;
@@ -48,8 +49,7 @@ public class DefaultDispatcher implements Dispatcher {
                 logger.error("send message - [{}] failure. target: {}", remindCode, target);
                 failCount++;
             } catch (Exception e) {
-                logger.error("error happen on send message - [" + remindCode + "]. target: " + target, e);
-                failCount++;
+                throw new DispatcherException(e);
             } finally {
                 if (failCount > MAX_FAIL_COUNT) {
                     // 限制最大失败次数，防止一直失败大量消耗系统资源
