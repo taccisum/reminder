@@ -1,6 +1,7 @@
 package com.github.taccisum.reminder.channel;
 
 import com.github.taccisum.reminder.api.Channel;
+import com.github.taccisum.reminder.exception.ChannelNotExistException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,9 @@ public abstract class ChannelFactory {
     }
 
     public static Channel create(String code) {
-        return channels.get(code);
+        if (channels.containsKey(code)) {
+            return channels.get(code);
+        }
+        throw new ChannelNotExistException(code);
     }
 }
