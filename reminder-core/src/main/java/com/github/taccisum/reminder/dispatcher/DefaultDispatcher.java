@@ -32,8 +32,8 @@ public class DefaultDispatcher implements Dispatcher {
 
     @Override
     public int dispatch(String remindCode, Subject subject, ChannelDescriptor channelDescriptor, Object... args) {
-        TargetSelector targetSelector = TargetSelectorFactory.create(remindCode);
-        MessageBuilder messageBuilder = MessageBuilderFactory.create(remindCode);
+        TargetSelector targetSelector = getTargetSelector(remindCode);
+        MessageBuilder messageBuilder = getMessageBuilder(remindCode);
         int failCount = 0;
 
         List<Target> targets = targetSelector.select(args);
@@ -58,5 +58,13 @@ public class DefaultDispatcher implements Dispatcher {
             }
         }
         return targets.size() - failCount;
+    }
+
+    MessageBuilder getMessageBuilder(String remindCode) {
+        return MessageBuilderFactory.create(remindCode);
+    }
+
+    TargetSelector getTargetSelector(String remindCode) {
+        return TargetSelectorFactory.create(remindCode);
     }
 }
