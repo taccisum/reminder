@@ -17,9 +17,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 25/10/2018
  */
 public class StringChannelDescriptorTest {
-
     @Before
     public void setUp() throws Exception {
+        ChannelFactory.clear();
         ChannelFactory.put(new FooChannel("A"));
         ChannelFactory.put(new FooChannel("B"));
         ChannelFactory.put(new FooChannel("C"));
@@ -38,7 +38,7 @@ public class StringChannelDescriptorTest {
 
     @Test
     public void toS() throws Exception {
-        assertThat(new StringChannelDescriptor("A_B, C")).isEqualTo("A_B, C");
+        assertThat(new StringChannelDescriptor("A_B, C").toString()).isEqualTo("A_B, C");
     }
 
     static class FooChannel implements Channel {

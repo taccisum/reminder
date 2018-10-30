@@ -21,4 +21,8 @@ public abstract class ChannelFactory {
     public static Channel create(String code) throws ChannelFactoryException {
         return MapUtils.getOrThrow(channels, code, new ChannelFactoryException(String.format("channel \"%s\" does not exist.", code)));
     }
+
+    public static void clear() {
+        channels.clear();
+    }
 }
