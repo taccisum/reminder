@@ -8,7 +8,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
- * @author tac - liaojf@cheegu.com
+ * @author tac
  * @since 2018/10/30
  */
 public class ChannelFallbackProxyTest {
