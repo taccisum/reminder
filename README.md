@@ -1,3 +1,7 @@
+[![Build Status](https://www.travis-ci.org/taccisum/reminder.svg?branch=master)](https://www.travis-ci.org/taccisum/reminder)
+[![codecov](https://codecov.io/gh/taccisum/reminder/branch/master/graph/badge.svg)](https://codecov.io/gh/taccisum/reminder)
+
+
 # 项目简介
 
 `reminder`是一个通用的提醒框架，旨在为企业应用中常见的对于一个提醒该`发给谁`、`发什么`、`如何发`的问题提供一个解决方案。
