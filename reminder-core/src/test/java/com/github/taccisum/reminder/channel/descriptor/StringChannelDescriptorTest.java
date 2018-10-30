@@ -17,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 25/10/2018
  */
 public class StringChannelDescriptorTest {
+
     @Before
     public void setUp() throws Exception {
         ChannelFactory.put(new FooChannel("A"));
@@ -33,6 +34,11 @@ public class StringChannelDescriptorTest {
         assertThat(((FallbackCapableChannel) channels.get(0)).getFallback().code()).isEqualTo("B");
         assertThat(channels.get(1)).isNotInstanceOf(FallbackCapableChannel.class);
         assertThat(channels.get(1).code()).isEqualTo("C");
+    }
+
+    @Test
+    public void toS() throws Exception {
+        assertThat(new StringChannelDescriptor("A_B, C")).isEqualTo("A_B, C");
     }
 
     static class FooChannel implements Channel {
