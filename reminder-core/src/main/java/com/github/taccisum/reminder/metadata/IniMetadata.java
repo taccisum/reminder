@@ -1,6 +1,5 @@
 package com.github.taccisum.reminder.metadata;
 
-import com.github.taccisum.reminder.api.MessageTemplate;
 import com.github.taccisum.reminder.exception.MetadataException;
 import com.github.taccisum.reminder.message.SimpleMessageTemplate;
 import com.github.taccisum.reminder.utils.MapUtils;
@@ -10,8 +9,6 @@ import org.ini4j.Wini;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author tac
@@ -19,21 +16,12 @@ import java.util.Map;
  */
 public class IniMetadata extends AbstractMetadata {
     private String iniPath;
-    private boolean initFlag = false;
-    private Map<String, MessageTemplate> templates = new HashMap<>();
 
     public IniMetadata(String iniPath) {
         this.iniPath = iniPath;
     }
 
-    @Override
-    public int init() {
-        int i = load();
-        initFlag = true;
-        return i;
-    }
-
-    private int load() {
+    protected int load() {
         // TODO:: 优化 + 单元测试
         InputStream is = null;
         try {
@@ -62,18 +50,5 @@ public class IniMetadata extends AbstractMetadata {
             }
         }
         return templates.size();
-    }
-
-    @Override
-    public int reload() {
-        return load();
-    }
-
-    @Override
-    public Map<String, MessageTemplate> templates() {
-        if (!initFlag) {
-            init();
-        }
-        return templates;
     }
 }
