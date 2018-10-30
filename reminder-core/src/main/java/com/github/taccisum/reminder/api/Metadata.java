@@ -12,4 +12,6 @@ public interface Metadata {
     int reload();
 
     Map<String, MessageTemplate> templates();
+
+    MessageTemplate template(String code);
 }

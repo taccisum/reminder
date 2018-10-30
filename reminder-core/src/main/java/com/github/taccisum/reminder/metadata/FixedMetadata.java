@@ -1,7 +1,6 @@
 package com.github.taccisum.reminder.metadata;
 
 import com.github.taccisum.reminder.api.MessageTemplate;
-import com.github.taccisum.reminder.api.Metadata;
 
 import java.util.Map;
 
@@ -9,7 +8,7 @@ import java.util.Map;
  * @author tac
  * @since 24/10/2018
  */
-public class FixedMetadata implements Metadata {
+public class FixedMetadata extends AbstractMetadata {
     private Map<String, MessageTemplate> templates;
 
     public FixedMetadata() {
