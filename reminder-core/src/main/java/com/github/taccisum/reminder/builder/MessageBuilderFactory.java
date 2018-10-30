@@ -1,7 +1,8 @@
 package com.github.taccisum.reminder.builder;
 
 import com.github.taccisum.reminder.api.MessageBuilder;
-import com.github.taccisum.reminder.exception.MessageBuilderNotExistException;
+import com.github.taccisum.reminder.exception.MessageBuilderFactoryException;
+import com.github.taccisum.reminder.utils.MapUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,13 +15,10 @@ public abstract class MessageBuilderFactory {
     private static Map<String, MessageBuilder> builders = new HashMap<>();
 
     public static void put(MessageBuilder builder) {
-        builders.put(builder.code(), builder);
+        MapUtils.putOrThrow(builders, builder.code(), builder, new MessageBuilderFactoryException(String.format("message builder \"%s\" is existed", builder.code())));
     }
 
     public static MessageBuilder create(String remindCode) {
-        if (builders.containsKey(remindCode)) {
-            return builders.get(remindCode);
-        }
-        throw new MessageBuilderNotExistException(remindCode);
+        return MapUtils.getOrThrow(builders, remindCode, new MessageBuilderFactoryException(String.format("message builder \"%s\" does not exist", remindCode)));
     }
 }

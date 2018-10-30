@@ -3,7 +3,8 @@ package com.github.taccisum.reminder.builder;
 import com.github.taccisum.reminder.api.MessageBuilder;
 import com.github.taccisum.reminder.api.MessageTemplate;
 import com.github.taccisum.reminder.api.Metadata;
-import com.github.taccisum.reminder.exception.TemplateNotExistException;
+import com.github.taccisum.reminder.exception.MetadataException;
+import com.github.taccisum.reminder.utils.MapUtils;
 
 /**
  * @author tac
@@ -16,10 +17,7 @@ public abstract class TemplatedMessageBuilder implements MessageBuilder {
         this.metadata = metadata;
     }
 
-    protected MessageTemplate getTemplate() throws TemplateNotExistException {
-        if (metadata.templates().containsKey(code())) {
-            return metadata.templates().get(code());
-        }
-        throw new TemplateNotExistException(code());
+    protected MessageTemplate getTemplate() throws MetadataException {
+        return MapUtils.getOrThrow(metadata.templates(), code(), new MetadataException(String.format("message template \"%s\" does not exist", code())));
     }
 }
