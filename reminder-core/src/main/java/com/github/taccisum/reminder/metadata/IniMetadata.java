@@ -7,8 +7,10 @@ import org.ini4j.Profile;
 import org.ini4j.Wini;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * @author tac
@@ -22,11 +24,14 @@ public class IniMetadata extends AbstractMetadata {
     }
 
     protected int load() {
-        // TODO:: 优化 + 单元测试
         InputStream is = null;
         try {
             if (iniPath.startsWith("classpath:")) {
-                is = this.getClass().getClassLoader().getResource(iniPath.substring("classpath:".length(), iniPath.length())).openStream();
+                URL resource = this.getClass().getClassLoader().getResource(iniPath.substring("classpath:".length(), iniPath.length()));
+                if (resource == null) {
+                    throw new MetadataException(new FileNotFoundException(iniPath));
+                }
+                is = resource.openStream();
             } else {
                 is = new FileInputStream(iniPath);
             }

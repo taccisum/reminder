@@ -8,4 +8,8 @@ public class MetadataException extends ReminderException {
     public MetadataException(String code) {
         super(code);
     }
+
+    public MetadataException(Throwable cause) {
+        super(cause);
+    }
 }
