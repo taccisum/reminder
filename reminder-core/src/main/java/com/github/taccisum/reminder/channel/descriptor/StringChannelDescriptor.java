@@ -13,6 +13,8 @@ import java.util.List;
  * @since 24/10/2018
  */
 public class StringChannelDescriptor implements ChannelDescriptor {
+    public static final String FIRST_SEPARATOR = ",";
+    public static final String SECOND_SEPARATOR = "@";
     private String val;
 
     public StringChannelDescriptor(String val) {
@@ -22,9 +24,9 @@ public class StringChannelDescriptor implements ChannelDescriptor {
     @Override
     public List<Channel> toChannels() {
         List<Channel> channels = new ArrayList<>();
-        String[] arr = val.split(",");
+        String[] arr = val.split(FIRST_SEPARATOR);
         for (String s : arr) {
-            String[] codes = s.split("_");
+            String[] codes = s.split(SECOND_SEPARATOR);
 
             if (codes.length == 1) {
                 channels.add(findChannel(codes[0].trim()));

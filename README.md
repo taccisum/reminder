@@ -129,11 +129,11 @@ reminder支持多渠道 + 降级发送，使用`ChannelDescriptor`来描述这�
 - 使用字符串来描述channel
 - 使用channel的code来映射到相应的channel实例
 - 通过`,`号分隔需要同时发送的channel
-- 通过`_`号描述channel链
+- 通过`@`号描述channel链
 
 示例：
 
-- `A_B, C`：同时通过channel A和channel C发送提醒，如果通过A发送失败，则降级为通过B发送
+- `A@B, C`：同时通过channel A和channel C发送提醒，如果通过A发送失败，则降级为通过B发送
 
 ## 使用facade类简化及语义化你的提醒调用[推荐]
 

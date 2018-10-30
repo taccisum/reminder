@@ -26,7 +26,7 @@ public class StringChannelDescriptorTest {
 
     @Test
     public void toChannels() throws Exception {
-        List<Channel> channels = new StringChannelDescriptor("A_B,C").toChannels();
+        List<Channel> channels = new StringChannelDescriptor("A@B,C").toChannels();
         assertThat(channels.get(0)).isInstanceOf(FallbackCapableChannel.class);
         assertThat(channels.get(0).code()).isEqualTo("A");
         assertThat(((FallbackCapableChannel) channels.get(0)).getFallback()).isNotInstanceOf(FallbackCapableChannel.class);
