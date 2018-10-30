@@ -1,6 +1,7 @@
 package com.github.taccisum.reminder.builder;
 
 import com.github.taccisum.reminder.api.MessageBuilder;
+import com.github.taccisum.reminder.exception.MessageBuilderNotExistException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,9 @@ public abstract class MessageBuilderFactory {
     }
 
     public static MessageBuilder create(String remindCode) {
-        return builders.get(remindCode);
+        if (builders.containsKey(remindCode)) {
+            return builders.get(remindCode);
+        }
+        throw new MessageBuilderNotExistException(remindCode);
     }
 }
