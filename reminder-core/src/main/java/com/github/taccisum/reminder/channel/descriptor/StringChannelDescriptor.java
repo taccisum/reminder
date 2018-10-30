@@ -52,4 +52,9 @@ public class StringChannelDescriptor implements ChannelDescriptor {
     private Channel findChannel(String code) {
         return ChannelFactory.create(code);
     }
+
+    @Override
+    public String toString() {
+        return val;
+    }
 }
