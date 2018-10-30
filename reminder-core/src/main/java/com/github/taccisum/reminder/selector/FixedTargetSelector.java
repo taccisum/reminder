@@ -14,8 +14,8 @@ public class FixedTargetSelector implements TargetSelector {
     private String code;
 
     public FixedTargetSelector(String code, List<Target> targets) {
-        this.targets = targets;
         this.code = code;
+        this.targets = targets;
     }
 
     @Override
