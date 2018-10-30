@@ -10,7 +10,7 @@ import com.github.taccisum.reminder.dispatcher.DefaultDispatcher;
  * @since 24/10/2018
  */
 public class Reminder extends AbstractReminder {
-    private Dispatcher dispatcher;
+    protected Dispatcher dispatcher;
 
     public Reminder() {
         dispatcher = new DefaultDispatcher();
