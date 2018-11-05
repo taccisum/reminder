@@ -19,6 +19,16 @@ reminder提供了`starter`，方便spring boot用户快速进行集成。
 
 ### 引入依赖
 
+```xml
+<dependency>
+    <groupId>com.github.taccisum</groupId>
+    <artifactId>reminder-spring-boot-starter</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
+> 注意：reminder当前暂未发布到maven central，需要下载源码后执行install打包到本地才能使用
+
 ### 创建channel
 ```java
 @Component
