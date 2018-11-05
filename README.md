@@ -11,7 +11,11 @@
 
 ## getting start
 
+reminder支持java原生环境下运行（目前暂未提供参考文档，可以参考[示例项目](#示例项目)）。
+
 reminder提供了`starter`，方便spring boot用户快速进行集成。
+
+以下均是在spring boot环境下的示例代码。
 
 ### 引入依赖
 
@@ -137,7 +141,7 @@ reminder支持多渠道 + 降级发送，使用`ChannelDescriptor`来描述这�
 
 示例：
 
-- `A@B, C`：同时通过channel A和channel C发送提醒，如果通过A发送失败，则降级为通过B发送
+- `A@B, C`：同时通过channel A和channel C发送提醒，如果通过A发送失败（抛出`ChannelSendException`），则降级为通过B发送
 
 ## 使用facade类简化及语义化你的提醒调用[推荐]
 
