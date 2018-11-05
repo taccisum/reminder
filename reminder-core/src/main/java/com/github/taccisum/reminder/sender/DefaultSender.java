@@ -1,7 +1,7 @@
 package com.github.taccisum.reminder.sender;
 
 import com.github.taccisum.reminder.api.*;
-import com.github.taccisum.reminder.exception.ChannelReceiveException;
+import com.github.taccisum.reminder.exception.ChannelSendException;
 import com.github.taccisum.reminder.exception.SendMessageException;
 
 import java.util.HashSet;
@@ -22,7 +22,7 @@ public class DefaultSender implements Sender {
         for (Channel channel : channels) {
             try {
                 fallbackIfSendFailure(channel, target, message, sentChannels, args);
-            } catch (ChannelReceiveException e) {
+            } catch (ChannelSendException e) {
                 // 说明channel及其fallback channel均处理失败了
                 successChannelCount--;
             }
@@ -41,7 +41,7 @@ public class DefaultSender implements Sender {
             }
             channel.send(target, message, args);
             sentChannels.add(channel.code());
-        } catch (ChannelReceiveException e) {
+        } catch (ChannelSendException e) {
             if (channel instanceof FallbackCapableChannel) {
                 Channel fallback = ((FallbackCapableChannel) channel).getFallback();
                 if (fallback != null) {

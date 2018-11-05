@@ -1,7 +1,7 @@
 package com.github.taccisum.reminder.sender;
 
 import com.github.taccisum.reminder.api.*;
-import com.github.taccisum.reminder.exception.ChannelReceiveException;
+import com.github.taccisum.reminder.exception.ChannelSendException;
 import com.github.taccisum.reminder.exception.SendMessageException;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class DefaultSenderTest {
         channels.add(null);
         channels.add(successChannel);
         when(descriptor.toChannels()).thenReturn(channels);
-        doThrow(ChannelReceiveException.class).when(sender).fallbackIfSendFailure((Channel) isNull(), any(), any(), any(), any());
+        doThrow(ChannelSendException.class).when(sender).fallbackIfSendFailure((Channel) isNull(), any(), any(), any(), any());
         doNothing().when(sender).fallbackIfSendFailure(eq(successChannel), any(), any(), any(), any());
         sender.send(mock(Target.class), mock(Message.class), descriptor);
     }
@@ -46,7 +46,7 @@ public class DefaultSenderTest {
         channels.add(null);
         channels.add(null);
         when(descriptor.toChannels()).thenReturn(channels);
-        doThrow(ChannelReceiveException.class).when(sender).fallbackIfSendFailure(any(), any(), any(), any(), any());
+        doThrow(ChannelSendException.class).when(sender).fallbackIfSendFailure(any(), any(), any(), any(), any());
         sender.send(mock(Target.class), mock(Message.class), descriptor);
     }
 
@@ -93,7 +93,7 @@ public class DefaultSenderTest {
         when(channelB.code()).thenReturn("B");
         when(channelA.getFallback()).thenReturn(channelB);
 
-        doThrow(ChannelReceiveException.class).when(channelA).send(any(), any(), any());
+        doThrow(ChannelSendException.class).when(channelA).send(any(), any(), any());
         doNothing().when(channelB).send(any(), any(), any());
         HashSet<String> sentChannels = new HashSet<>();
         sender.fallbackIfSendFailure(channelA, null, null, sentChannels, null);
@@ -104,7 +104,7 @@ public class DefaultSenderTest {
         verify(channelB, times(1)).send(any(), any(), any());
     }
 
-    @Test(expected = ChannelReceiveException.class)
+    @Test(expected = ChannelSendException.class)
     public void fallbackIfSendFailureWhenAllChannelFailure() throws Exception {
         Channel channelB = mock(Channel.class);
         FallbackCapableChannel channelA = mock(FallbackCapableChannel.class);
@@ -112,8 +112,8 @@ public class DefaultSenderTest {
         when(channelB.code()).thenReturn("B");
         when(channelA.getFallback()).thenReturn(channelB);
 
-        doThrow(ChannelReceiveException.class).when(channelA).send(any(), any(), any());
-        doThrow(ChannelReceiveException.class).when(channelB).send(any(), any(), any());
+        doThrow(ChannelSendException.class).when(channelA).send(any(), any(), any());
+        doThrow(ChannelSendException.class).when(channelB).send(any(), any(), any());
         sender.fallbackIfSendFailure(channelA, null, null, new HashSet<>(), null);
     }
 }

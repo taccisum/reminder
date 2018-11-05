@@ -4,5 +4,5 @@ package com.github.taccisum.reminder.exception;
  * @author tac
  * @since 24/10/2018
  */
-public class ChannelReceiveException extends ReminderException {
+public class ChannelSendException extends ReminderException {
 }
