@@ -21,4 +21,8 @@ public abstract class TargetSelectorFactory {
     public static TargetSelector create(String remindCode) {
         return MapUtils.getOrThrow(selectors, remindCode, new TargetSelectorFactoryException(String.format("target selector \"%s\" does not exist", remindCode)));
     }
+
+    public static void clear() {
+        selectors.clear();
+    }
 }

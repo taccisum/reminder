@@ -21,4 +21,8 @@ public abstract class MessageBuilderFactory {
     public static MessageBuilder create(String remindCode) {
         return MapUtils.getOrThrow(builders, remindCode, new MessageBuilderFactoryException(String.format("message builder \"%s\" does not exist", remindCode)));
     }
+
+    public static void clear() {
+        builders.clear();
+    }
 }
