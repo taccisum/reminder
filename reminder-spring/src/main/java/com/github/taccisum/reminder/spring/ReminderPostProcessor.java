@@ -13,7 +13,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
  * @author tac
  * @since 25/10/2018
  */
-public class MessageBuilderPostProcessor implements BeanPostProcessor {
+public class ReminderPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
