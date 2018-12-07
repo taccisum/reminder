@@ -7,8 +7,8 @@ import com.github.taccisum.reminder.api.Sender;
 import com.github.taccisum.reminder.dispatcher.DefaultDispatcher;
 import com.github.taccisum.reminder.metadata.IniMetadata;
 import com.github.taccisum.reminder.sender.DefaultSender;
-import com.github.taccisum.reminder.spring.MessageBuilderPostProcessor;
 import com.github.taccisum.reminder.spring.ReminderFactoryLifeCycleManager;
+import com.github.taccisum.reminder.spring.ReminderPostProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
@@ -19,8 +19,8 @@ import org.springframework.context.annotation.Bean;
 public class ReminderAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
-    public MessageBuilderPostProcessor messageBuilderPostProcessor() {
-        return new MessageBuilderPostProcessor();
+    public ReminderPostProcessor messageBuilderPostProcessor() {
+        return new ReminderPostProcessor();
     }
 
     @Bean
