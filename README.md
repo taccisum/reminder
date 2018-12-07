@@ -5,17 +5,15 @@
 
 # 项目简介
 
-`reminder`是一个通用的提醒框架，旨在为企业应用中常见的提醒通知业务提供一个解决方案。
+`reminder`是一个通用的提醒框架，旨在为企业应用中常见的提醒通知业务提供一个解决方案。基于此框架，开发人员只需关注一个提醒该『发给谁』、『发什么』及『如何发』的问题即可。
 
-使用此框架，开发人员只需通过实现相应的组件来解决一个提醒该『发给谁』、『发什么』、『如何发』的部分即可。
-
-reminder架构如下图所示
+## 架构参考
 
 ![reminder architecture](docs/asset/reminder_architecture.png)
 
-# 如何使用
+## 如何使用
 
-## getting start
+### getting start
 
 reminder支持java原生环境下运行（目前暂未提供参考文档，可以参考[示例项目](#示例项目)）。
 
@@ -23,7 +21,7 @@ reminder提供了`starter`，方便spring boot用户快速进行集成。
 
 以下均是在spring boot环境下的示例代码。
 
-### 引入依赖
+#### 引入依赖
 
 ```xml
 <dependency>
@@ -35,7 +33,7 @@ reminder提供了`starter`，方便spring boot用户快速进行集成。
 
 > 注意：reminder当前暂未发布到maven central，需要下载源码后执行install打包到本地才能使用
 
-### 创建channel
+#### 创建channel
 ```java
 @Component
 public class ConsoleChannel implements Channel {
@@ -53,7 +51,7 @@ public class ConsoleChannel implements Channel {
 }
 ```
 
-### 创建message builder
+#### 创建message builder
 
 ```java
 @Component
@@ -81,7 +79,7 @@ public class FooMessageBuilder extends TemaplteMessageBuilder {
 }
 ```
 
-### 创建target selector
+#### 创建target selector
 
 ```java
 @Component
@@ -101,7 +99,7 @@ public class FooTargetSelector implements TargetSelector {
 }
 ```
 
-### 添加message templates
+#### 添加message templates
 
 **templates.ini**
 ```ini
@@ -110,7 +108,7 @@ topic=foo topic
 body=target id: {id}, subject: {subject}
 ```
 
-### 使用reminder发送提醒
+#### 使用reminder发送提醒
 
 ```java
 @Component
@@ -124,7 +122,7 @@ public class FooRunner implements ApplicationRunner {
 }
 ```
 
-### 启动应用
+#### 启动应用
 
 你可以看到控制台输出了如下信息
 ```text
@@ -133,7 +131,7 @@ send message "target id: 2, subject: 1" via console channel
 send message "target id: 3, subject: 1" via console channel
 ```
 
-## 新增一种提醒类型 
+### 新增一种提醒类型 
 
 每新增一种提醒类型在reminder中至少需要新增一个`MessageBuilder`及一个`TargetSelector`。
 
@@ -144,7 +142,7 @@ send message "target id: 3, subject: 1" via console channel
 
 上述两个组件均实现了`Unique`接口，需要将其`code()`方法返回值指向该提醒的唯一code，之后发起提醒时会自动根据其code找到相应的组件进行处理。
 
-## 指定channel进行发送
+### 指定channel进行发送
 
 reminder支持多渠道 + 降级发送，使用`ChannelDescriptor`来描述这个过程。
 
@@ -159,7 +157,7 @@ reminder支持多渠道 + 降级发送，使用`ChannelDescriptor`来描述这�
 
 - `A@B, C`：同时通过channel A和channel C发送提醒，如果通过A发送失败（抛出`ChannelSendException`），则降级为通过B发送
 
-## 使用facade类简化及语义化你的提醒调用[推荐]
+### 使用facade类简化及语义化你的提醒调用[推荐]
 
 `Reminder`提供了发起一个提醒的统一入口，但是由于不同类型提醒在业务上可能存在异构性，因此提供了一个Object类型的参数供各个提醒传入各自需要的自定义参数。但是这样一来，势必造成方法调用时的混乱。为了解决这个问题，建议通过一个facade类来封装各类型提醒的调用过程。
 
@@ -184,6 +182,6 @@ public class RemindingServiceFacade {
 facade.foo(1L, 2L, 3L);
 ```
 
-# 示例项目
+## 示例项目
 
 - [reminder sample](https://github.com/taccisum/reminder-sample)
